@@ -49,30 +49,6 @@
         [self createMoveCellForIndex:(int)index data:moveCellModel];
     }];
 }
-- (void)addViews
-{
-    [self.moveCellArray removeAllObjects];
-    int toolLine = (self.frame.size.width - self.minimumLineSpacing) / (self.moveCellWidth + self.minimumLineSpacing);
-    CGFloat x;
-    CGFloat y;
-    CGFloat w = self.moveCellWidth;
-    CGFloat h = self.moveCellHeight;
-    int row;
-    int line;
-    for (int  i = 0; i < self.dataArray.count;  i ++)
-    {
-        line = i % toolLine;
-        row = i / toolLine;
-        x = line * (self.minimumLineSpacing + self.moveCellWidth) + self.minimumLineSpacing;
-        y =  row * (self.minimumInteritemSpacing + self.moveCellHeight) + self.minimumInteritemSpacing;
-        XXBMoveCell *cell = [[XXBMoveCell alloc] initWithFrame:CGRectMake(x, y, w, h)];
-        [self addSubview:cell];
-        [self.moveCellArray addObject:cell];
-        cell.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0  blue:arc4random_uniform(255)/255.0  alpha:1.0];
-    }
-}
-
-
 - (void)setIsModified:(BOOL)isModified
 {
     // 无论什么状态，都需要修改所有按钮的状态
@@ -104,7 +80,6 @@
     // 取出了两个按钮，判断按钮的索引数值，根据索引数值递增，或者递减动画
     // 同时调整数据
     int exchangeIndex = -1;
-    
     for (XXBMoveCell *cell in self.moveCellArray)
     {
         if (cell != moveCell)
@@ -128,13 +103,12 @@
         {
             // 向前移动
             [self decreaseMoveFrom:exchangeIndex to:moveCell.index];
-        } else {
+        }
+        else
+        {
             // 向后移动
             [self increaseMoveFrom:exchangeIndex to:moveCell.index];
         }
-//
-//#warning 还需要对数组中的数据做一下处理！！！
-        
         moveCell.index = exchangeIndex;
         
         // 需要对数组进行重新的排序，更新数组的索引数值
@@ -158,9 +132,12 @@
         NSLog(@"%@",moveCellModel);
     }
 }
-
-#pragma mark - 私有成员方法
-#pragma mark 向后移动
+/**
+ *  从某个下标移动到某个下标 （向后移动）
+ *
+ *  @param from 开始下标
+ *  @param to   要到的下标
+ */
 - (void)increaseMoveFrom:(int)from to:(int)to
 {
     for (int i = from; i < to; i++)
@@ -172,7 +149,12 @@
         }];
     }
 }
-#pragma mark 向前移动
+/**
+ *  从某个下标移动到某个下标 （向前移动）
+ *
+ *  @param from 开始下标
+ *  @param to   要到的下标
+ */
 - (void)decreaseMoveFrom:(int)from to:(int)to
 {
     // from 大于 to

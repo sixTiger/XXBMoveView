@@ -8,23 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+typedef struct XXBMoveCellLayout {
+    CGFloat           minimumLineSpacing;           //最小列间距
+    CGFloat           minimumInteritemSpacing;      //最小行间距
+    CGFloat           moveCellWidth;                //cell的宽度
+    CGFloat           moveCellHeight;               // cell 的高度
+}XXBMoveCellLayout;
 @interface XXBMoveView : UIScrollView
-/**
- *  最小行间距
- */
-@property(nonatomic , assign) CGFloat           minimumLineSpacing;
-/**
- *  最小列间距
- */
-@property(nonatomic , assign) CGFloat           minimumInteritemSpacing;
-@property(nonatomic , assign) CGFloat           moveCellWidth;
-@property(nonatomic , assign) CGFloat           moveCellHeight;
+@property(nonatomic , assign)XXBMoveCellLayout moveCellLayout;
 /**
  *   存放数据的数组
  */
 @property(nonatomic , strong) NSMutableArray    *dataArray;
 /**
- *  是否可以编辑
+ *  是否可以移动 默认是可以的 YES
  */
 @property (nonatomic, assign) BOOL              isModified;
 @end

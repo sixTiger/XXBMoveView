@@ -20,11 +20,12 @@
     [super viewDidLoad];
     self.moviewView.backgroundColor = [UIColor grayColor];
     NSMutableArray  *dataArray = [NSMutableArray array];
-    for ( int i = 0; i < 4; i ++)
+    for ( int i = 0; i < 20; i ++)
     {
         [dataArray addObject:[[XXBMoveCellModel alloc] initWithIndex:i]];
     }
     self.moviewView.dataArray = dataArray;
+    self.moviewView.moveCellLayout = (XXBMoveCellLayout){10,10,100,100};
 }
 - (XXBMoveView *)moviewView
 {

@@ -13,9 +13,20 @@
 
 @interface XXBMoveView ()<XXBMoveCellDelegate>
 /**
+ *  最小列间距
+ */
+@property(nonatomic , assign) CGFloat           minimumLineSpacing;
+/**
+ *  最小行间距
+ */
+@property(nonatomic , assign) CGFloat           minimumInteritemSpacing;
+@property(nonatomic , assign) CGFloat           moveCellWidth;
+@property(nonatomic , assign) CGFloat           moveCellHeight;
+/**
  *  存放的View的数组
  */
 @property(nonatomic , strong) NSMutableArray    *moveCellArray;
+@property(nonatomic , assign)int toolLine;
 @end
 @implementation XXBMoveView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -28,16 +39,13 @@
 }
 - (void)setupMoveView
 {
+    self.scrollsToTop = YES;
     self.backgroundColor = [UIColor purpleColor];
-    self.minimumLineSpacing = 5;
-    self.minimumInteritemSpacing = 5;
-    self.moveCellWidth = 100;
-    self.moveCellHeight = 100;
-}
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    [self setIsModified:YES];
+    self.minimumLineSpacing = 10;
+    self.minimumInteritemSpacing = 10;
+    self.moveCellWidth = 90;
+    self.moveCellHeight = 120;
+    [self adjustSpacing];
 }
 - (void)setDataArray:(NSMutableArray *)dataArray
 {
@@ -45,9 +53,29 @@
     // 1. 删除所有的子视图，避免重复设置时出现问题
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.moveCellArray removeAllObjects];
-    [_dataArray enumerateObjectsUsingBlock:^(XXBMoveCellModel *moveCellModel, NSUInteger index, BOOL *stop) {
+    [self.dataArray enumerateObjectsUsingBlock:^(XXBMoveCellModel *moveCellModel, NSUInteger index, BOOL *stop) {
         [self createMoveCellForIndex:(int)index data:moveCellModel];
     }];
+    [self setIsModified:YES];
+    self.contentSize = CGSizeMake(0,CGRectGetMaxY([[self.moveCellArray lastObject] frame]) + self.minimumInteritemSpacing );
+}
+- (void)setMoveCellLayout:(XXBMoveCellLayout)moveCellLayout
+{
+    _moveCellLayout = moveCellLayout;
+    _minimumLineSpacing = _moveCellLayout.minimumLineSpacing;
+    _minimumInteritemSpacing = _moveCellLayout.minimumInteritemSpacing;
+    _moveCellWidth = _moveCellLayout.moveCellWidth;
+    _moveCellHeight = _moveCellLayout.moveCellHeight;
+    [self adjustSpacing];
+    self.dataArray = self.dataArray;
+}
+/**
+ *  计算最小的间隔
+ */
+- (void)adjustSpacing
+{
+    self.toolLine = (self.frame.size.width - _minimumLineSpacing) / (self.moveCellWidth + _minimumLineSpacing);
+    _minimumLineSpacing = (self.frame.size.width - self.toolLine * self.moveCellWidth)/(self.toolLine + 1);
 }
 - (void)setIsModified:(BOOL)isModified
 {
@@ -95,7 +123,6 @@
             }
         }
     }
-    
     if (exchangeIndex >= 0 && exchangeIndex != moveCell.index)
     {
         // 做交换处理
@@ -184,9 +211,8 @@
     CGFloat y;
     CGFloat w = self.moveCellWidth;
     CGFloat h = self.moveCellHeight;
-    int toolLine = (self.frame.size.width - self.minimumLineSpacing) / (self.moveCellWidth + self.minimumLineSpacing);
-    int line = moveCellIndex % toolLine;
-    int row = moveCellIndex / toolLine;
+    int line = moveCellIndex % self.toolLine;
+    int row = moveCellIndex / self.toolLine;
     x = line * (self.minimumLineSpacing + self.moveCellWidth) + self.minimumLineSpacing;
     y =  row * (self.minimumInteritemSpacing + self.moveCellHeight) + self.minimumInteritemSpacing;
     return CGRectMake(x, y, w, h);

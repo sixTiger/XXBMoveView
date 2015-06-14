@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "XXBMoveView.h"
+#import "XXBMoveCellModel.h"
 
 @interface ViewController ()
 @property(nonatomic , weak)XXBMoveView *moviewView;
@@ -18,6 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.moviewView.backgroundColor = [UIColor grayColor];
+    NSMutableArray  *dataArray = [NSMutableArray array];
+    for ( int i = 0; i < 4; i ++)
+    {
+        [dataArray addObject:[[XXBMoveCellModel alloc] initWithIndex:i]];
+    }
+    self.moviewView.dataArray = dataArray;
 }
 - (XXBMoveView *)moviewView
 {

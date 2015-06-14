@@ -7,6 +7,7 @@
 //
 
 #import "XXBMoveCell.h"
+#import "XXBMoveCellModel.h"
 
 
 @interface XXBMoveCell ()<UIGestureRecognizerDelegate>
@@ -25,6 +26,26 @@
 
 
 #pragma mark 设置按钮类型，针对不同的类型，改变按钮的外观
+
+- (instancetype)initWithFrame:(CGRect)frame andMoveCellModel:(XXBMoveCellModel *)moveCellModel
+{
+    if (self = [super initWithFrame:frame])
+    {
+        self.moveCellModel = moveCellModel;
+        self.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1.0];
+    }
+    return self;
+}
+- (void)setMoveCellModel:(XXBMoveCellModel *)moveCellModel
+{
+    _moveCellModel = moveCellModel;
+    self.index = _moveCellModel.index;
+}
+- (void)setIndex:(int)index
+{
+    _index = index;
+    self.moveCellModel.index = index;
+}
 - (void)setType:(XXBMoveCellType)type
 {
     _type = type;
@@ -88,6 +109,10 @@
         {
             self.shouldMove = NO;
             self.transform = CGAffineTransformScale(self.transform, 0.83334, 0.83334);
+            if ([self.delegate respondsToSelector:@selector(XXBMoveCellDidMoved:)] )
+            {
+                [self.delegate XXBMoveCellDidMoved:self];
+            }
             break;
         }
         default:

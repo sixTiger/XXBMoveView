@@ -7,34 +7,34 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>BC6EE140-B339-4C02-BF3A-9E7B1D4126CD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>moveTest</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>BB10DEE61F484F9D3E9ADACF43F8AA02EAA24EC2</key>
-		<string>https://git.oschina.net/six_tiger/Pix72.git</string>
+		<key>04ADF3EB163AE3DA72ED4C26CEFF8663840F9625</key>
+		<string>https://github.com/sixTiger/moveTest.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>moveTest/moveTest.xcodeproj/project.xcworkspace</string>
+	<string>moveTest/moveTest.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>BB10DEE61F484F9D3E9ADACF43F8AA02EAA24EC2</key>
+		<key>04ADF3EB163AE3DA72ED4C26CEFF8663840F9625</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://git.oschina.net/six_tiger/Pix72.git</string>
+	<string>https://github.com/sixTiger/moveTest.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>BB10DEE61F484F9D3E9ADACF43F8AA02EAA24EC2</string>
+	<string>04ADF3EB163AE3DA72ED4C26CEFF8663840F9625</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>BB10DEE61F484F9D3E9ADACF43F8AA02EAA24EC2</string>
+			<string>04ADF3EB163AE3DA72ED4C26CEFF8663840F9625</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Pix72</string>
+			<string>moveTest</string>
 		</dict>
 	</array>
 </dict>

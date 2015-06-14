@@ -11,8 +11,8 @@
 @interface XXBMoveView : UIScrollView
 @property(nonatomic , assign) CGFloat           minimumLineSpacing;
 @property(nonatomic , assign) CGFloat           minimumInteritemSpacing;
-@property(nonatomic , assign) CGFloat           viewWidth;
-@property(nonatomic , assign) CGFloat           viewHeight;
+@property(nonatomic , assign) CGFloat           moveCellWidth;
+@property(nonatomic , assign) CGFloat           moveCellHeight;
 /**
  *   存放数据的数组
  */

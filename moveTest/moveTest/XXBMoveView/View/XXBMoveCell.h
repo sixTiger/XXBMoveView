@@ -16,7 +16,7 @@ typedef enum
 } XXBMoveCellType;
 
 
-@class XXBMoveCell;
+@class XXBMoveCell,XXBMoveCellModel;
 @protocol XXBMoveCellDelegate <NSObject>
 
 /**
@@ -44,5 +44,8 @@ typedef enum
 // moveCell 的类别
 @property (nonatomic, assign) XXBMoveCellType type;
 // cell对应在数组中的索引，可以用于按钮的排序
-@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, assign) int index;
+@property(nonatomic , strong)XXBMoveCellModel *moveCellModel;
+
+- (instancetype)initWithFrame:(CGRect)frame andMoveCellModel:(XXBMoveCellModel *)moveCellModel;
 @end

@@ -14,6 +14,7 @@
 		091053721B1F07F7007069AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 091053711B1F07F7007069AD /* Images.xcassets */; };
 		091053751B1F07F7007069AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 091053731B1F07F7007069AD /* LaunchScreen.xib */; };
 		091053811B1F07F8007069AD /* moveTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 091053801B1F07F8007069AD /* moveTestTests.m */; };
+		09755DDA1B2D168E00CC8A16 /* XXBMoveCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 09755DD91B2D168E00CC8A16 /* XXBMoveCellModel.m */; };
 		09D8850D1B20478E00EFB712 /* XXBMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8850C1B20478E00EFB712 /* XXBMoveView.m */; };
 		09D885101B2047A600EFB712 /* XXBMoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8850F1B2047A600EFB712 /* XXBMoveCell.m */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,8 @@
 		0910537A1B1F07F8007069AD /* moveTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = moveTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0910537F1B1F07F8007069AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		091053801B1F07F8007069AD /* moveTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moveTestTests.m; sourceTree = "<group>"; };
+		09755DD81B2D168E00CC8A16 /* XXBMoveCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveCellModel.h; sourceTree = "<group>"; };
+		09755DD91B2D168E00CC8A16 /* XXBMoveCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveCellModel.m; sourceTree = "<group>"; };
 		09D8850B1B20478E00EFB712 /* XXBMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveView.h; sourceTree = "<group>"; };
 		09D8850C1B20478E00EFB712 /* XXBMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveView.m; sourceTree = "<group>"; };
 		09D8850E1B2047A600EFB712 /* XXBMoveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveCell.h; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 		0910538F1B1F0A8A007069AD /* Modle */ = {
 			isa = PBXGroup;
 			children = (
+				09755DD81B2D168E00CC8A16 /* XXBMoveCellModel.h */,
+				09755DD91B2D168E00CC8A16 /* XXBMoveCellModel.m */,
 			);
 			path = Modle;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 				09D8850D1B20478E00EFB712 /* XXBMoveView.m in Sources */,
 				0910536D1B1F07F7007069AD /* ViewController.m in Sources */,
 				0910536A1B1F07F7007069AD /* AppDelegate.m in Sources */,
+				09755DDA1B2D168E00CC8A16 /* XXBMoveCellModel.m in Sources */,
 				091053671B1F07F7007069AD /* main.m in Sources */,
 				09D885101B2047A600EFB712 /* XXBMoveCell.m in Sources */,
 			);

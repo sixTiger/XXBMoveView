@@ -11,7 +11,6 @@
 #import "XXBMoveCellModel.h"
 
 
-
 @interface XXBMoveView ()<XXBMoveCellDelegate>
 /**
  *  存放的View的数组
@@ -46,7 +45,6 @@
     // 1. 删除所有的子视图，避免重复设置时出现问题
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.moveCellArray removeAllObjects];
-    // 3. 创建按钮
     [_dataArray enumerateObjectsUsingBlock:^(XXBMoveCellModel *moveCellModel, NSUInteger index, BOOL *stop) {
         [self createMoveCellForIndex:(int)index data:moveCellModel];
     }];

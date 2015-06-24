@@ -117,7 +117,7 @@
         //根据当前的cell的位置判断让scroll 向上移动
         if (moveCell.frame.origin.y - self.contentOffset.y <= self.minimumInteritemSpacing + moveCell.frame.size.height * 0.5 )
         {
-            if (self.contentOffset.x - self.frame.size.height * 0.5 >= 0)
+            if (self.contentOffset.y - self.frame.size.height  >= 0)
             {
                 
                 [UIView animateWithDuration:0.25 animations:^{
@@ -138,7 +138,7 @@
         /**
          *  像下移动
          */
-        if (moveCell.frame.origin.y + moveCell.frame.size.height +self.minimumInteritemSpacing - self.contentOffset.y + moveCell.frame.size.height >= self.frame.size.height)
+        if (moveCell.frame.origin.y + moveCell.frame.size.height +self.minimumInteritemSpacing - self.contentOffset.y + moveCell.frame.size.height * 0.5 >= self.frame.size.height)
         {
             if (self.contentOffset.y + self.frame.size.height <= self.contentSize.height - self.minimumInteritemSpacing - self.frame.size.height)
             {
@@ -211,6 +211,7 @@
 - (void)XXBMoveCellDidMoved:(XXBMoveCell *)moveCell
 {
     self.scrollEnabled = YES;
+    self.autoMove = YES;
     moveCell.frame = [self rectForIndexOfMoveCell:moveCell.index];
     NSLog(@"移动完了");
     //    for (XXBMoveCellModel * moveCellModel in self.dataArray)

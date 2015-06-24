@@ -26,7 +26,11 @@
  *  存放的View的数组
  */
 @property(nonatomic , strong) NSMutableArray    *moveCellArray;
-@property(nonatomic , assign)int toolLine;
+@property(nonatomic , assign) int               toolLine;
+/**
+ *  是否自动移动
+ */
+@property(nonatomic , assign) BOOL              autoMove;
 @end
 @implementation XXBMoveView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -40,6 +44,7 @@
 - (void)setupMoveView
 {
     self.scrollsToTop = YES;
+    self.autoMove = YES;
     self.backgroundColor = [UIColor purpleColor];
     self.minimumLineSpacing = 10;
     self.minimumInteritemSpacing = 10;
@@ -103,15 +108,57 @@
 }
 - (void)XXBMoveCellIsMoving:(XXBMoveCell *)moveCell
 {
-    
-    //根据当前的cell的位置判断让scroll 上下移动
-    
-    if(CGRectGetMinY(moveCell.frame) - self.contentOffset.y < self.minimumInteritemSpacing )
+    if (self.autoMove)
     {
-        
-    }
-    else
-    {
+        self.autoMove = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.autoMove = YES;
+        });
+        //根据当前的cell的位置判断让scroll 向上移动
+        if (moveCell.frame.origin.y - self.contentOffset.y <= self.minimumInteritemSpacing + moveCell.frame.size.height * 0.5 )
+        {
+            if (self.contentOffset.x - self.frame.size.height * 0.5 >= 0)
+            {
+                
+                [UIView animateWithDuration:0.25 animations:^{
+                    moveCell.frame = CGRectMake(moveCell.frame.origin.x, moveCell.frame.origin.y - self.frame.size.height, moveCell.frame.size.width, moveCell.frame.size.height);
+                    
+                    [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y - self.frame.size.height) animated:NO];
+                }];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.25 animations:^{
+                    
+                    moveCell.frame = CGRectMake(moveCell.frame.origin.x, self.minimumInteritemSpacing, moveCell.frame.size.width, moveCell.frame.size.height);
+                    [self setContentOffset:CGPointMake(self.contentOffset.x, 0) animated:NO];
+                }];
+            }
+        }
+        /**
+         *  像下移动
+         */
+        if (moveCell.frame.origin.y + moveCell.frame.size.height +self.minimumInteritemSpacing - self.contentOffset.y + moveCell.frame.size.height >= self.frame.size.height)
+        {
+            if (self.contentOffset.y + self.frame.size.height <= self.contentSize.height - self.minimumInteritemSpacing - self.frame.size.height)
+            {
+                [UIView animateWithDuration:0.25 animations:^{
+                    
+                    moveCell.frame = CGRectMake(moveCell.frame.origin.x, moveCell.frame.origin.y + self.frame.size.height, moveCell.frame.size.width, moveCell.frame.size.height);
+                    
+                    [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + self.frame.size.height) animated:NO];
+                }];
+            }
+            else
+            {
+                [UIView animateWithDuration:0.25 animations:^{
+                    
+                    moveCell.frame = CGRectMake(moveCell.frame.origin.x, moveCell.frame.origin.y + (self.contentSize.height - self.contentOffset.y - self.frame.size.height), moveCell.frame.size.width, moveCell.frame.size.height);
+                    
+                    [self setContentOffset:CGPointMake(self.contentOffset.x,self.contentSize.height - self.frame.size.height) animated:NO];
+                }];
+            }
+        }
         
     }
     
@@ -166,10 +213,10 @@
     self.scrollEnabled = YES;
     moveCell.frame = [self rectForIndexOfMoveCell:moveCell.index];
     NSLog(@"移动完了");
-//    for (XXBMoveCellModel * moveCellModel in self.dataArray)
-//    {
-//        NSLog(@"%@",moveCellModel);
-//    }
+    //    for (XXBMoveCellModel * moveCellModel in self.dataArray)
+    //    {
+    //        NSLog(@"%@",moveCellModel);
+    //    }
 }
 /**
  *  从某个下标移动到某个下标 （向后移动）

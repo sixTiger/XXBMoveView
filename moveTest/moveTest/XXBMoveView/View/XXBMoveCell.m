@@ -83,6 +83,7 @@
     {
         if (UIGestureRecognizerStateEnded == recognizer.state)
         {
+            self.shouldMove = NO;
             [_delegate XXBMoveCellDidMoved:self];
         }
     }
@@ -135,7 +136,6 @@
         _longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
         //至少长按的时间
         _longPress.minimumPressDuration = 1;
-        //触发事件前允许手指移动的范围 默认是10
         _longPress.allowableMovement = 10;
         _longPress.delegate = self;
     }

@@ -98,10 +98,23 @@
 #pragma mark - 按钮的拖拽代理方法
 - (void)XXBMoveCellBeginMoving:(XXBMoveCell *)moveCell
 {
+    self.scrollEnabled = NO;
     [self bringSubviewToFront:moveCell];
 }
 - (void)XXBMoveCellIsMoving:(XXBMoveCell *)moveCell
 {
+    
+    //根据当前的cell的位置判断让scroll 上下移动
+    
+    if(CGRectGetMinY(moveCell.frame) - self.contentOffset.y < self.minimumInteritemSpacing )
+    {
+        
+    }
+    else
+    {
+        
+    }
+    
     // 遍历按钮数组中的所有按钮
     // 检查与当前按钮的区域相交的情况
     // 如果，相交面积大于按钮面积的1/4， (w * h / 4）break
@@ -113,7 +126,6 @@
         if (cell != moveCell)
         {
             CGRect interRect = CGRectIntersection(cell.frame, moveCell.frame);
-            
             // 判断相交面积是否超过1/4
             if (interRect.size.width * interRect.size.height * 4 > cell.frame.size.width * cell.frame.size.height)
             {
@@ -137,7 +149,6 @@
             [self increaseMoveFrom:exchangeIndex to:moveCell.index];
         }
         moveCell.index = exchangeIndex;
-        
         // 需要对数组进行重新的排序，更新数组的索引数值
         [self.moveCellArray sortUsingComparator:^NSComparisonResult(XXBMoveCell *moveCell1, XXBMoveCell *moveCell2) {
             // 按照按钮的索引降序重新排列数组
@@ -152,12 +163,13 @@
 
 - (void)XXBMoveCellDidMoved:(XXBMoveCell *)moveCell
 {
+    self.scrollEnabled = YES;
     moveCell.frame = [self rectForIndexOfMoveCell:moveCell.index];
     NSLog(@"移动完了");
-    for (XXBMoveCellModel * moveCellModel in self.dataArray)
-    {
-        NSLog(@"%@",moveCellModel);
-    }
+//    for (XXBMoveCellModel * moveCellModel in self.dataArray)
+//    {
+//        NSLog(@"%@",moveCellModel);
+//    }
 }
 /**
  *  从某个下标移动到某个下标 （向后移动）

@@ -72,6 +72,7 @@
     _moveCellWidth = _moveCellLayout.moveCellWidth;
     _moveCellHeight = _moveCellLayout.moveCellHeight;
     [self adjustSpacing];
+    
     self.dataArray = self.dataArray;
 }
 /**
@@ -115,7 +116,7 @@
             self.autoMove = YES;
         });
         //根据当前的cell的位置判断让scroll 向上移动
-        if (moveCell.frame.origin.y - self.contentOffset.y <= self.minimumInteritemSpacing + moveCell.frame.size.height * 0.5 )
+        if (moveCell.frame.origin.y - self.contentOffset.y <= self.minimumInteritemSpacing + self.autoMoveMargin )
         {
             if (self.contentOffset.y - self.frame.size.height  >= 0)
             {
@@ -138,7 +139,7 @@
         /**
          *  像下移动
          */
-        if (moveCell.frame.origin.y + moveCell.frame.size.height +self.minimumInteritemSpacing - self.contentOffset.y + moveCell.frame.size.height * 0.5 >= self.frame.size.height)
+        if (moveCell.frame.origin.y + moveCell.frame.size.height +self.minimumInteritemSpacing - self.contentOffset.y + self.autoMoveMargin >= self.frame.size.height)
         {
             if (self.contentOffset.y + self.frame.size.height <= self.contentSize.height - self.minimumInteritemSpacing - self.frame.size.height)
             {
@@ -285,5 +286,12 @@
         _moveCellArray = [NSMutableArray array];
     }
     return _moveCellArray;
+}
+- (CGFloat)autoMoveMargin
+{
+    if (_autoMoveMargin <= 0) {
+        _autoMoveMargin = 20;
+    }
+    return _autoMoveMargin;
 }
 @end

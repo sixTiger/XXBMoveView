@@ -15,13 +15,17 @@ typedef struct XXBMoveCellLayout {
     CGFloat           moveCellHeight;               // cell 的高度
 }XXBMoveCellLayout;
 @interface XXBMoveView : UIScrollView
-@property(nonatomic , assign)XXBMoveCellLayout moveCellLayout;
+@property(nonatomic , assign)XXBMoveCellLayout      moveCellLayout;
 /**
  *   存放数据的数组
  */
-@property(nonatomic , strong) NSMutableArray    *dataArray;
+@property(nonatomic , strong) NSMutableArray        *dataArray;
 /**
  *  是否可以移动 默认是可以的 YES
  */
-@property (nonatomic, assign) BOOL              isModified;
+@property (nonatomic, assign) BOOL                  isModified;
+/**
+ *  自动滚动的边距 默认是20
+ */
+@property(nonatomic , assign)CGFloat                autoMoveMargin;
 @end

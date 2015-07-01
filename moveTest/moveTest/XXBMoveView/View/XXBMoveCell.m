@@ -9,7 +9,6 @@
 #import "XXBMoveCell.h"
 #import "XXBMoveCellModel.h"
 
-
 @interface XXBMoveCell ()<UIGestureRecognizerDelegate>
 {
     UIPanGestureRecognizer              *_panGesture;       // 拖拽手势
@@ -67,14 +66,14 @@
 #pragma mark - 手势拖动
 - (void)panGesture:(UIPanGestureRecognizer *)recognizer
 {
-    if (!self.shouldMove )
+    if (!self.shouldMove)
         return;
     CGPoint location = [recognizer translationInView:self];
     if (UIGestureRecognizerStateChanged == recognizer.state)
     {
         CGPoint point = self.center;
-        point.x += location.x;
-        point.y += location.y;
+        point.x += location.x * 1.2;
+        point.y += location.y * 1.2;
         self.center = point;
         [recognizer setTranslation:CGPointZero inView:self];
         [_delegate XXBMoveCellIsMoving:self];
@@ -143,10 +142,21 @@
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+    if ([gestureRecognizer isKindOfClass:NSClassFromString(@"UIScrollViewPanGestureRecognizer")] || [gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
         return YES;
     }
     return NO;
 }
-
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([gestureRecognizer isKindOfClass:NSClassFromString(@"UIScrollViewPanGestureRecognizer")])
+    {
+        return YES;
+    }
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]])
+    {
+        return self.shouldMove;
+    }
+    return YES;
+}
 @end

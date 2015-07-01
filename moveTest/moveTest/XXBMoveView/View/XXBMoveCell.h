@@ -46,6 +46,5 @@ typedef enum
 // cell对应在数组中的索引，可以用于按钮的排序
 @property (nonatomic, assign) int index;
 @property(nonatomic , strong)XXBMoveCellModel *moveCellModel;
-
 - (instancetype)initWithFrame:(CGRect)frame andMoveCellModel:(XXBMoveCellModel *)moveCellModel;
 @end

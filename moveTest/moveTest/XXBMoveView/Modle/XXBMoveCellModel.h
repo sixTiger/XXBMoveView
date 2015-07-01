@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface XXBMoveCellModel : NSObject
+// 下标
 @property(nonatomic , assign)int index;
-
-
-
-- (instancetype)initWithIndex:(int)index;
+// 标志
 @property(nonatomic , assign)int flg;
+- (instancetype)initWithIndex:(int)index;
 @end

@@ -105,6 +105,10 @@
 {
     self.scrollEnabled = NO;
     [self bringSubviewToFront:moveCell];
+    if([self.moveViewDelegate respondsToSelector:@selector(moveViewStartMove:)])
+    {
+        [self.moveViewDelegate moveViewStartMove:self];
+    }
 }
 - (void)XXBMoveCellIsMoving:(XXBMoveCell *)moveCell
 {
@@ -214,6 +218,10 @@
             return moveCellModel1.index > moveCellModel2.index;
         }];
     }
+    if([self.moveViewDelegate respondsToSelector:@selector(moveViewMoveing:)])
+    {
+        [self.moveViewDelegate moveViewMoveing:self];
+    }
 }
 
 - (void)XXBMoveCellDidMoved:(XXBMoveCell *)moveCell
@@ -221,11 +229,10 @@
     self.scrollEnabled = YES;
     self.autoMove = YES;
     moveCell.frame = [self rectForIndexOfMoveCell:moveCell.index];
-    NSLog(@"移动完了");
-    //    for (XXBMoveCellModel * moveCellModel in self.dataArray)
-    //    {
-    //        NSLog(@"%@",moveCellModel);
-    //    }
+    if([self.moveViewDelegate respondsToSelector:@selector(moveViewEndMove:)])
+    {
+        [self.moveViewDelegate moveViewEndMove:self];
+    }
 }
 /**
  *  从某个下标移动到某个下标 （向后移动）

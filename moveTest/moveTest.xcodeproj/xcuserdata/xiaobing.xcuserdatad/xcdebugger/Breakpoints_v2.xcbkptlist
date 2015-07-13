@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "moveTest/XXBMoveView/View/XXBMoveView.m"
-            timestampString = "458440871.652877"
+            timestampString = "458442041.617522"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "-XXBMoveCellDidMoved:"
             landmarkType = "5">
          </BreakpointContent>

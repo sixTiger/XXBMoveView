@@ -15,7 +15,7 @@ typedef struct XXBMoveCellLayout {
 }XXBMoveCellLayout;
 
 @class XXBMoveView;
-@protocol XXBMoveViewDelegte <NSObject>
+@protocol XXBMoveViewDelegte <UIScrollViewDelegate>
 @optional
 /**
  *  XXBMoveView开始移动
@@ -39,6 +39,7 @@ typedef struct XXBMoveCellLayout {
 @end
 
 @interface XXBMoveView : UIScrollView
+
 @property(nonatomic , assign)XXBMoveCellLayout      moveCellLayout;
 /**
  *   存放数据的数组
@@ -52,5 +53,5 @@ typedef struct XXBMoveCellLayout {
  *  自动滚动的边距 默认是20
  */
 @property(nonatomic , assign)CGFloat                autoMoveMargin;
-@property(nonatomic , weak)id<XXBMoveViewDelegte>   moveViewDelegate;
+@property(nonatomic , weak)id<XXBMoveViewDelegte>   delegate;
 @end

@@ -33,6 +33,8 @@
 @property(nonatomic , assign) BOOL              autoMove;
 @end
 @implementation XXBMoveView
+@dynamic delegate;
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame])
@@ -105,9 +107,9 @@
 {
     self.scrollEnabled = NO;
     [self bringSubviewToFront:moveCell];
-    if([self.moveViewDelegate respondsToSelector:@selector(moveViewStartMove:)])
+    if([self.delegate respondsToSelector:@selector(moveViewStartMove:)])
     {
-        [self.moveViewDelegate moveViewStartMove:self];
+        [self.delegate moveViewStartMove:self];
     }
 }
 - (void)XXBMoveCellIsMoving:(XXBMoveCell *)moveCell
@@ -218,9 +220,9 @@
             return moveCellModel1.index > moveCellModel2.index;
         }];
     }
-    if([self.moveViewDelegate respondsToSelector:@selector(moveViewMoveing:)])
+    if([self.delegate respondsToSelector:@selector(moveViewMoveing:)])
     {
-        [self.moveViewDelegate moveViewMoveing:self];
+        [self.delegate moveViewMoveing:self];
     }
 }
 
@@ -229,9 +231,9 @@
     self.scrollEnabled = YES;
     self.autoMove = YES;
     moveCell.frame = [self rectForIndexOfMoveCell:moveCell.index];
-    if([self.moveViewDelegate respondsToSelector:@selector(moveViewEndMove:)])
+    if([self.delegate respondsToSelector:@selector(moveViewEndMove:)])
     {
-        [self.moveViewDelegate moveViewEndMove:self];
+        [self.delegate moveViewEndMove:self];
     }
 }
 /**

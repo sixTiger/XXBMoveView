@@ -22,7 +22,7 @@
     [super viewDidLoad];
     self.moviewView.backgroundColor = [UIColor grayColor];
     _dataArray = [NSMutableArray array];
-    for ( int i = 0; i < 5; i ++)
+    for ( int i = 0; i < 81; i ++)
     {
         [_dataArray addObject:[[XXBMoveCellModel alloc] initWithIndex:i]];
     }
@@ -36,7 +36,7 @@
         XXBMoveView *moveView = [[XXBMoveView alloc] initWithFrame:self.view.bounds];
         [self.view addSubview:moveView];
         moveView.autoresizingMask = (1 << 6) - 1;
-        moveView.moveViewDelegate = self;
+        moveView.delegate = self;
         _moviewView = moveView;
     }
     return _moviewView;
@@ -59,5 +59,9 @@
     {
         NSLog(@"移动结束%@",moveCellModel);
     }
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollView 正在滚动");
 }
 @end

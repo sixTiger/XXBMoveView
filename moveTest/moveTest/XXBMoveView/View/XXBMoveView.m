@@ -72,7 +72,6 @@
     _moveCellWidth = _moveCellLayout.moveCellWidth;
     _moveCellHeight = _moveCellLayout.moveCellHeight;
     [self adjustSpacing];
-    
     self.dataArray = self.dataArray;
 }
 /**
@@ -169,19 +168,27 @@
     // 取出了两个按钮，判断按钮的索引数值，根据索引数值递增，或者递减动画
     // 同时调整数据
     int exchangeIndex = -1;
+    CGFloat toolSize = 0;
     for (XXBMoveCell *cell in self.moveCellArray)
     {
         if (cell != moveCell)
         {
             CGRect interRect = CGRectIntersection(cell.frame, moveCell.frame);
             // 判断相交面积是否超过1/4
-            if (interRect.size.width * interRect.size.height * 4 > cell.frame.size.width * cell.frame.size.height)
+            CGFloat cellSizeCount = cell.frame.size.width * cell.frame.size.height;
+            CGFloat intersectSizeCount = interRect.size.width * interRect.size.height;
+            toolSize += intersectSizeCount;
+            if (intersectSizeCount * 4 > cellSizeCount)
             {
                 exchangeIndex = cell.index;
                 
                 break;
             }
         }
+    }
+    if (toolSize <= 0)
+    {
+        exchangeIndex = (int)self.moveCellArray.count - 1;
     }
     if (exchangeIndex >= 0 && exchangeIndex != moveCell.index)
     {

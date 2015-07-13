@@ -7,13 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
-
 typedef struct XXBMoveCellLayout {
     CGFloat           minimumLineSpacing;           //最小列间距
     CGFloat           minimumInteritemSpacing;      //最小行间距
     CGFloat           moveCellWidth;                //cell的宽度
     CGFloat           moveCellHeight;               // cell 的高度
 }XXBMoveCellLayout;
+
+@class XXBMoveView;
+@protocol XXBMoveViewDelegte <NSObject>
+@optional
+/**
+ *  XXBMoveView开始移动
+ *
+ *  @param moveView 移动的XXBMoveView
+ */
+- (void)moveViewStartMove:(XXBMoveView *)moveView;
+/**
+ *  XXBMoveView正在移动
+ *
+ *  @param moveView 移动的XXBMoveView
+ */
+- (void)moveViewMoveing:(XXBMoveView *)moveView;
+/**
+ *  XXBMoveView停止移动
+ *
+ *  @param moveView 移动的XXBMoveView
+ */
+- (void)moveViewEndMove:(XXBMoveView *)moveView;
+
+@end
+
 @interface XXBMoveView : UIScrollView
 @property(nonatomic , assign)XXBMoveCellLayout      moveCellLayout;
 /**
@@ -28,4 +52,5 @@ typedef struct XXBMoveCellLayout {
  *  自动滚动的边距 默认是20
  */
 @property(nonatomic , assign)CGFloat                autoMoveMargin;
+@property(nonatomic , weak)id<XXBMoveViewDelegte>   moveViewDelegate;
 @end

@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface XXBMoveCellModel : NSObject
-// 下标
+// 当前下标
 @property(nonatomic , assign)int index;
-// 标志
+// 最开始的时候的下标
 @property(nonatomic , assign)int flg;
+
 - (instancetype)initWithIndex:(int)index;
 @end

@@ -14,9 +14,9 @@
 		091053721B1F07F7007069AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 091053711B1F07F7007069AD /* Images.xcassets */; };
 		091053751B1F07F7007069AD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 091053731B1F07F7007069AD /* LaunchScreen.xib */; };
 		091053811B1F07F8007069AD /* moveTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 091053801B1F07F8007069AD /* moveTestTests.m */; };
-		09755DDA1B2D168E00CC8A16 /* XXBMoveCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 09755DD91B2D168E00CC8A16 /* XXBMoveCellModel.m */; };
-		09D8850D1B20478E00EFB712 /* XXBMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8850C1B20478E00EFB712 /* XXBMoveView.m */; };
-		09D885101B2047A600EFB712 /* XXBMoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D8850F1B2047A600EFB712 /* XXBMoveCell.m */; };
+		622E290D1BC79B0A00CB9DFE /* XXBMoveCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 622E29071BC79B0A00CB9DFE /* XXBMoveCellModel.m */; settings = {ASSET_TAGS = (); }; };
+		622E290E1BC79B0A00CB9DFE /* XXBMoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 622E290A1BC79B0A00CB9DFE /* XXBMoveCell.m */; settings = {ASSET_TAGS = (); }; };
+		622E290F1BC79B0A00CB9DFE /* XXBMoveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 622E290C1BC79B0A00CB9DFE /* XXBMoveView.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,12 +43,12 @@
 		0910537A1B1F07F8007069AD /* moveTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = moveTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0910537F1B1F07F8007069AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		091053801B1F07F8007069AD /* moveTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moveTestTests.m; sourceTree = "<group>"; };
-		09755DD81B2D168E00CC8A16 /* XXBMoveCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveCellModel.h; sourceTree = "<group>"; };
-		09755DD91B2D168E00CC8A16 /* XXBMoveCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveCellModel.m; sourceTree = "<group>"; };
-		09D8850B1B20478E00EFB712 /* XXBMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveView.h; sourceTree = "<group>"; };
-		09D8850C1B20478E00EFB712 /* XXBMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveView.m; sourceTree = "<group>"; };
-		09D8850E1B2047A600EFB712 /* XXBMoveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveCell.h; sourceTree = "<group>"; };
-		09D8850F1B2047A600EFB712 /* XXBMoveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveCell.m; sourceTree = "<group>"; };
+		622E29061BC79B0A00CB9DFE /* XXBMoveCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveCellModel.h; sourceTree = "<group>"; };
+		622E29071BC79B0A00CB9DFE /* XXBMoveCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveCellModel.m; sourceTree = "<group>"; };
+		622E29091BC79B0A00CB9DFE /* XXBMoveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveCell.h; sourceTree = "<group>"; };
+		622E290A1BC79B0A00CB9DFE /* XXBMoveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveCell.m; sourceTree = "<group>"; };
+		622E290B1BC79B0A00CB9DFE /* XXBMoveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveView.h; sourceTree = "<group>"; };
+		622E290C1BC79B0A00CB9DFE /* XXBMoveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 		091053631B1F07F7007069AD /* moveTest */ = {
 			isa = PBXGroup;
 			children = (
-				0910538D1B1F0A8A007069AD /* XXBMoveView */,
+				622E29041BC79B0A00CB9DFE /* XXBMoveView */,
 				091053681B1F07F7007069AD /* AppDelegate.h */,
 				091053691B1F07F7007069AD /* AppDelegate.m */,
 				0910536B1B1F07F7007069AD /* ViewController.h */,
@@ -129,39 +129,32 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		0910538D1B1F0A8A007069AD /* XXBMoveView */ = {
+		622E29041BC79B0A00CB9DFE /* XXBMoveView */ = {
 			isa = PBXGroup;
 			children = (
-				0910538E1B1F0A8A007069AD /* Controller */,
-				0910538F1B1F0A8A007069AD /* Modle */,
-				091053901B1F0A8A007069AD /* View */,
+				622E29051BC79B0A00CB9DFE /* Modle */,
+				622E29081BC79B0A00CB9DFE /* View */,
 			);
-			path = XXBMoveView;
+			name = XXBMoveView;
+			path = ../../XXBMoveView;
 			sourceTree = "<group>";
 		};
-		0910538E1B1F0A8A007069AD /* Controller */ = {
+		622E29051BC79B0A00CB9DFE /* Modle */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		0910538F1B1F0A8A007069AD /* Modle */ = {
-			isa = PBXGroup;
-			children = (
-				09755DD81B2D168E00CC8A16 /* XXBMoveCellModel.h */,
-				09755DD91B2D168E00CC8A16 /* XXBMoveCellModel.m */,
+				622E29061BC79B0A00CB9DFE /* XXBMoveCellModel.h */,
+				622E29071BC79B0A00CB9DFE /* XXBMoveCellModel.m */,
 			);
 			path = Modle;
 			sourceTree = "<group>";
 		};
-		091053901B1F0A8A007069AD /* View */ = {
+		622E29081BC79B0A00CB9DFE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				09D8850B1B20478E00EFB712 /* XXBMoveView.h */,
-				09D8850C1B20478E00EFB712 /* XXBMoveView.m */,
-				09D8850E1B2047A600EFB712 /* XXBMoveCell.h */,
-				09D8850F1B2047A600EFB712 /* XXBMoveCell.m */,
+				622E29091BC79B0A00CB9DFE /* XXBMoveCell.h */,
+				622E290A1BC79B0A00CB9DFE /* XXBMoveCell.m */,
+				622E290B1BC79B0A00CB9DFE /* XXBMoveView.h */,
+				622E290C1BC79B0A00CB9DFE /* XXBMoveView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -266,12 +259,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09D8850D1B20478E00EFB712 /* XXBMoveView.m in Sources */,
 				0910536D1B1F07F7007069AD /* ViewController.m in Sources */,
 				0910536A1B1F07F7007069AD /* AppDelegate.m in Sources */,
-				09755DDA1B2D168E00CC8A16 /* XXBMoveCellModel.m in Sources */,
+				622E290F1BC79B0A00CB9DFE /* XXBMoveView.m in Sources */,
 				091053671B1F07F7007069AD /* main.m in Sources */,
-				09D885101B2047A600EFB712 /* XXBMoveCell.m in Sources */,
+				622E290D1BC79B0A00CB9DFE /* XXBMoveCellModel.m in Sources */,
+				622E290E1BC79B0A00CB9DFE /* XXBMoveCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,7 +27,7 @@
         [_dataArray addObject:[[XXBMoveCellModel alloc] initWithIndex:i]];
     }
     self.moviewView.dataArray = _dataArray;
-    self.moviewView.moveCellLayout = (XXBMoveCellLayout){10,10,100,100};
+    self.moviewView.moveCellLayout = (XXBMoveCellLayout){10,10,80,80};
 }
 - (XXBMoveView *)moviewView
 {

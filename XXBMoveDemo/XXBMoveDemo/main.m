@@ -1,9 +1,9 @@
 //
 //  main.m
-//  moveTest
+//  XXBMoveDemo
 //
-//  Created by 杨小兵 on 15/6/3.
-//  Copyright (c) 2015年 xiaoxiaobing. All rights reserved.
+//  Created by xiaobing on 16/3/22.
+//  Copyright © 2016年 xiaobing. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

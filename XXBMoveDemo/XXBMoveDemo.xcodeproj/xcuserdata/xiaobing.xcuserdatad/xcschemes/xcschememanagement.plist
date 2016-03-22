@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>moveTest.xcscheme</key>
+		<key>XXBMoveDemo.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>091053601B1F07F7007069AD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>091053791B1F07F8007069AD</key>
+		<key>627057031CA130210062BF7E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

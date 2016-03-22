@@ -31,6 +31,10 @@
  *  是否自动移动
  */
 @property(nonatomic , assign) BOOL              autoMove;
+/**
+ *  当前正在移动的cell
+ */
+@property(nonatomic , weak) XXBMoveCell         *moveingCell;
 @end
 @implementation XXBMoveView
 @dynamic delegate;
@@ -106,13 +110,136 @@
 - (void)XXBMoveCellBeginMoving:(XXBMoveCell *)moveCell
 {
     self.scrollEnabled = NO;
+    self.moveingCell = moveCell;
     [self bringSubviewToFront:moveCell];
     if([self.delegate respondsToSelector:@selector(moveViewStartMove:)])
     {
         [self.delegate moveViewStartMove:self];
     }
 }
-- (void)XXBMoveCellIsMoving:(XXBMoveCell *)moveCell
+
+- (void)XXBMoveCellIsMoving:(XXBMoveCell *)moveCell {
+    if (moveCell == nil) {
+        return;
+    }
+    if (self.autoMove)
+    {
+        self.autoMove = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.autoMove = YES;
+            [self XXBMoveCellIsMoving:self.moveingCell];
+        });
+        CGFloat shouldMove = 0.0;
+        //根据当前的cell的位置判断让scroll 向上移动
+        if (moveCell.frame.origin.y - self.contentOffset.y <= self.minimumInteritemSpacing + self.autoMoveMargin ) {
+            shouldMove =  (self.minimumInteritemSpacing + self.autoMoveMargin) - (moveCell.frame.origin.y - self.contentOffset.y);
+            if (self.contentOffset.y - shouldMove  >= 0) {
+                
+                [UIView animateWithDuration:0.1 animations:^{
+                    moveCell.frame = CGRectMake(moveCell.frame.origin.x, moveCell.frame.origin.y - shouldMove, moveCell.frame.size.width, moveCell.frame.size.height);
+                    
+                    [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y - shouldMove) animated:NO];
+                }];
+            } else {
+                [UIView animateWithDuration:0.25 animations:^{
+                    [self setContentOffset:CGPointMake(self.contentOffset.x, 0) animated:NO];
+                }];
+            }
+        }
+        /**
+         *  像下移动
+         */
+        if (moveCell.frame.origin.y + moveCell.frame.size.height +self.minimumInteritemSpacing - self.contentOffset.y + self.autoMoveMargin >= self.frame.size.height)
+        {
+            shouldMove = moveCell.frame.origin.y + moveCell.frame.size.height +self.minimumInteritemSpacing - self.contentOffset.y + self.autoMoveMargin -  self.frame.size.height;
+            if (self.contentOffset.y + shouldMove <= self.contentSize.height - self.minimumInteritemSpacing - self.frame.size.height)
+            {
+                [UIView animateWithDuration:0.25 animations:^{
+                    
+                    moveCell.frame = CGRectMake(moveCell.frame.origin.x, moveCell.frame.origin.y + shouldMove, moveCell.frame.size.width, moveCell.frame.size.height);
+                    
+                    [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + shouldMove) animated:NO];
+                }];
+            } else {
+                [UIView animateWithDuration:0.25 animations:^{
+                    
+                    moveCell.frame = CGRectMake(moveCell.frame.origin.x, moveCell.frame.origin.y + (self.contentSize.height - self.contentOffset.y - self.frame.size.height), moveCell.frame.size.width, moveCell.frame.size.height);
+                    
+                    [self setContentOffset:CGPointMake(self.contentOffset.x,self.contentSize.height - self.frame.size.height) animated:NO];
+                }];
+            }
+        }
+        
+    }
+    
+    // 遍历按钮数组中的所有按钮
+    // 检查与当前按钮的区域相交的情况
+    // 如果，相交面积大于按钮面积的1/4， (w * h / 4）break
+    // 取出了两个按钮，判断按钮的索引数值，根据索引数值递增，或者递减动画
+    // 同时调整数据
+    int exchangeIndex = -1;
+    CGFloat toolSize = 0;
+    for (XXBMoveCell *cell in self.moveCellArray) {
+        if (cell != moveCell) {
+            CGRect interRect = CGRectIntersection(cell.frame, moveCell.frame);
+            // 判断相交面积是否超过1/4
+            CGFloat cellSize = cell.frame.size.width * cell.frame.size.height;
+            CGFloat intersectSize = interRect.size.width * interRect.size.height;
+            toolSize += intersectSize;
+            if (intersectSize * 1.9 > cellSize)
+            {
+                exchangeIndex = cell.index;
+                
+                break;
+            }
+        }
+    }
+    if (toolSize <= 0) {
+        if (moveCell.frame.origin.y < self.autoMoveMargin) {
+            exchangeIndex = 0;
+        } else {
+            exchangeIndex = (int)self.moveCellArray.count - 1;
+        }
+    }
+    if (exchangeIndex >= 0 && exchangeIndex != moveCell.index) {
+        // 做交换处理
+        if (exchangeIndex > moveCell.index) {
+            // 向前移动
+            [self decreaseMoveFrom:exchangeIndex to:moveCell.index];
+        } else {
+            // 向后移动
+            [self increaseMoveFrom:exchangeIndex to:moveCell.index];
+        }
+        moveCell.index = exchangeIndex;
+        [self resortDataAndView];
+    }
+    if([self.delegate respondsToSelector:@selector(moveViewMoveing:)])
+    {
+        [self.delegate moveViewMoveing:self];
+    }
+}
+
+/**
+ *  对数据进行重新排序
+ */
+- (void)resortDataAndView {
+    // 需要对数组进行重新的排序，更新数组的索引数值
+    [self.moveCellArray sortUsingComparator:^NSComparisonResult(XXBMoveCell *moveCell1, XXBMoveCell *moveCell2) {
+        // 按照按钮的索引降序重新排列数组
+        return moveCell1.index > moveCell2.index;
+    }];
+    [self.dataArray sortUsingComparator:^NSComparisonResult(XXBMoveCellModel *moveCellModel1, XXBMoveCellModel *moveCellModel2) {
+        // 按照按钮的索引降序重新排列数组
+        return moveCellModel1.index > moveCellModel2.index;
+    }];
+}
+
+/**
+ *  一次移动一页
+ *
+ *  @param moveCell 移动的cell
+ */
+- (void)XXBMoveCellIsMoving_pag:(XXBMoveCell *)moveCell
 {
     if (self.autoMove)
     {
@@ -228,6 +355,7 @@
 
 - (void)XXBMoveCellDidMoved:(XXBMoveCell *)moveCell
 {
+    self.moveingCell = nil;
     self.scrollEnabled = YES;
     self.autoMove = YES;
     moveCell.frame = [self rectForIndexOfMoveCell:moveCell.index];
@@ -242,10 +370,8 @@
  *  @param from 开始下标
  *  @param to   要到的下标
  */
-- (void)increaseMoveFrom:(int)from to:(int)to
-{
-    for (int i = from; i < to; i++)
-    {
+- (void)increaseMoveFrom:(int)from to:(int)to {
+    for (int i = from; i < to; i++) {
         XXBMoveCell *moveCell = self.moveCellArray[i];
         [UIView animateWithDuration:0.25 animations:^{
             moveCell.frame = [self rectForIndexOfMoveCell:(i + 1)];
@@ -259,11 +385,9 @@
  *  @param from 开始下标
  *  @param to   要到的下标
  */
-- (void)decreaseMoveFrom:(int)from to:(int)to
-{
+- (void)decreaseMoveFrom:(int)from to:(int)to {
     // from 大于 to
-    for (int i = (to + 1); i <= from; i++)
-    {
+    for (int i = (to + 1); i <= from; i++) {
         XXBMoveCell *moveCellModle = self.moveCellArray[i];
         // 计算-1的位置，设置按钮的位置
         [UIView animateWithDuration:0.25 animations:^{

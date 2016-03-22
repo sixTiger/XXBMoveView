@@ -46,22 +46,22 @@
     
     for (XXBMoveCellModel * moveCellModel in self.dataArray)
     {
-        NSLog(@"开始移动 %@",moveCellModel);
+//        NSLog(@"开始移动 %@",moveCellModel);
     }
 }
 - (void)moveViewMoveing:(XXBMoveView *)moveView
 {
-    NSLog(@"正在移动");
+//    NSLog(@"正在移动");
 }
 - (void)moveViewEndMove:(XXBMoveView *)moveView
 {
     for (XXBMoveCellModel * moveCellModel in self.dataArray)
     {
-        NSLog(@"移动结束%@",moveCellModel);
+//        NSLog(@"移动结束%@",moveCellModel);
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollView 正在滚动");
+//    NSLog(@"scrollView 正在滚动");
 }
 @end

@@ -33,7 +33,7 @@ static NSString *moveCellID = @"moveCellID";
 - (void)_setupCollectionView {
     XXBMoveViewLayout *moveLayout = [[XXBMoveViewLayout alloc] init];
     moveLayout.delegate = self;
-    CGSize cellSize = CGSizeMake(320, 80);
+    CGSize cellSize = CGSizeMake(280, 100);
     moveLayout.itemSize = cellSize;
     moveLayout.minimumLineSpacing = 4;
     moveLayout.minimumInteritemSpacing = 4;

@@ -1,19 +1,21 @@
 //
 //  ViewController.m
-//  moveTest
+//  XXBMovedemo2
 //
-//  Created by 杨小兵 on 15/6/3.
-//  Copyright (c) 2015年 xiaoxiaobing. All rights reserved.
+//  Created by xiaobing on 16/4/5.
+//  Copyright © 2016年 xiaobing. All rights reserved.
 //
 
 #import "ViewController.h"
 #import "XXBMoveView.h"
 #import "XXBMoveCellModel.h"
 
+
 @interface ViewController ()<XXBMoveViewDelegte>
 @property(nonatomic , weak)XXBMoveView *moviewView;
 
 @property(nonatomic , strong)NSMutableArray *dataArray;
+
 @end
 
 @implementation ViewController
@@ -46,22 +48,24 @@
     
     for (XXBMoveCellModel * moveCellModel in self.dataArray)
     {
-//        NSLog(@"开始移动 %@",moveCellModel);
+        //        NSLog(@"开始移动 %@",moveCellModel);
     }
 }
 - (void)moveViewMoveing:(XXBMoveView *)moveView
 {
-//    NSLog(@"正在移动");
+    //    NSLog(@"正在移动");
 }
 - (void)moveViewEndMove:(XXBMoveView *)moveView
 {
     for (XXBMoveCellModel * moveCellModel in self.dataArray)
     {
-//        NSLog(@"移动结束%@",moveCellModel);
+        //        NSLog(@"移动结束%@",moveCellModel);
     }
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-//    NSLog(@"scrollView 正在滚动");
+    //    NSLog(@"scrollView 正在滚动");
 }
+
+
 @end

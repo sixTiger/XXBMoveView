@@ -85,6 +85,7 @@
     if (interCount < 1 ) {
         interCount = 1;
     }
+    
     for (int i = 0; i < interCount; i++) {
         [heightArray addObject:@"0"];
     }
@@ -193,15 +194,21 @@
     CGPoint dragPointOnCanvas = [longPressGesture locationInView:self.canvas];
     [self autoHandlerMove:dragPointOnCanvas andView:self.canvas];
     switch (longPressGesture.state) {
+            
         case UIGestureRecognizerStateBegan: {
             souceCell.hidden = YES;
+            offSet.y -= (dragPointOnCanvas.y - repressentationImageView.center.y);
+            repressentationImageView.center = CGPointMake(repressentationImageView.center.x, dragPointOnCanvas.y);
             [self.canvas addSubview:repressentationImageView];
             break;
         }
+            
         case UIGestureRecognizerStateChanged: {
             CGRect imagViewFrame = repressentationImageView.frame;
             CGPoint point = CGPointZero;
-            point.x = dragPointOnCanvas.x - offSet.x;
+            point.x = repressentationImageView.frame.origin.x;
+            //FIXME: 如果X轴也跟着跑，调用下边的代码就可以了
+            //            point.x = dragPointOnCanvas.x - offSet.x;
             point.y = dragPointOnCanvas.y - offSet.y;
             imagViewFrame.origin = point;
             repressentationImageView.frame = imagViewFrame;
@@ -221,6 +228,7 @@
             }
             break;
         }
+            
         case UIGestureRecognizerStateEnded: {
             
             [(XXBMoveCell *)souceCell setDranging:NO];
@@ -233,7 +241,6 @@
             repressentationImageView = nil;
             offSetY = 0;
             [self.collectionView reloadItemsAtIndexPaths:@[shouReloadIndexPath]];
-            
             break;
         }
             
@@ -248,12 +255,9 @@
             repressentationImageView = nil;
             offSetY = 0;
             [self.collectionView reloadItemsAtIndexPaths:@[shouReloadIndexPath]];
-        }
             break;
+        }
     }
-    
-    
-    
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -279,6 +283,7 @@
             currentIndexPath = [collectionView indexPathForCell:cell];
             [collectionView reloadItemsAtIndexPaths:@[currentIndexPath]];
             souceCell = [collectionView cellForItemAtIndexPath:currentIndexPath];
+            break;
         }
         
     }

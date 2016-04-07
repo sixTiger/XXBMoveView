@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XXBMoveModel.h"
 
 @interface XXBMoveCell : UICollectionViewCell
-@property(nonatomic , assign) BOOL   dranging;
+@property(nonatomic , assign) BOOL              dranging;
+@property(nonatomic , strong) XXBMoveModel      *moveModel;
 @end

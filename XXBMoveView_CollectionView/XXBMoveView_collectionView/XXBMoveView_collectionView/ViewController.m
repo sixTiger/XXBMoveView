@@ -34,7 +34,7 @@ static NSString *moveCellID = @"moveCellID";
 - (void)_setupCollectionView {
     XXBMoveViewLayout *moveLayout = [[XXBMoveViewLayout alloc] init];
     moveLayout.delegate = self;
-    CGSize cellSize = CGSizeMake(80, 100);
+    CGSize cellSize = CGSizeMake(300, 100);
     moveLayout.itemSize = cellSize;
     moveLayout.minimumLineSpacing = 4;
     moveLayout.minimumInteritemSpacing = 4;
@@ -59,6 +59,7 @@ static NSString *moveCellID = @"moveCellID";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     XXBMoveCell *moveCell = [collectionView dequeueReusableCellWithReuseIdentifier:moveCellID forIndexPath:indexPath];
+    moveCell.moveModel = self.dataSouceArray[indexPath.section][indexPath.row];
     return moveCell;
 }
 

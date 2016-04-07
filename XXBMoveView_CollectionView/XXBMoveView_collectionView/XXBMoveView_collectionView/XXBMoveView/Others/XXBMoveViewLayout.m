@@ -192,11 +192,9 @@
     
     CGPoint dragPointOnCanvas = [longPressGesture locationInView:self.canvas];
     [self autoHandlerMove:dragPointOnCanvas andView:self.canvas];
-    
-    NSLog(@"XXX -- %@",NSStringFromCGPoint(dragPointOnCanvas));
     switch (longPressGesture.state) {
         case UIGestureRecognizerStateBegan: {
-            //            souceCell.hidden = YES;
+            souceCell.hidden = YES;
             [self.canvas addSubview:repressentationImageView];
             break;
         }
@@ -273,14 +271,14 @@
             UIGraphicsEndPDFContext();
             
             repressentationImageView = [[UIImageView alloc] initWithImage:image];
-            cellInCavasFrame.origin.x  += 10;
+            cellInCavasFrame.origin.x += 10;
             cellInCavasFrame.size.width -= 20;
             cellInCavasFrame.size.height = movingCellHeight;
             repressentationImageView.frame = cellInCavasFrame;
             offSet = CGPointMake(pointPressInCanvas.x - cellInCavasFrame.origin.x, pointPressInCanvas.y - cellInCavasFrame.origin.y);
             currentIndexPath = [collectionView indexPathForCell:cell];
             [collectionView reloadItemsAtIndexPaths:@[currentIndexPath]];
-            souceCell = cell;
+            souceCell = [collectionView cellForItemAtIndexPath:currentIndexPath];
         }
         
     }

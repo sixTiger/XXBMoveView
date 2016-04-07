@@ -13,6 +13,8 @@
 
 - (void)moveView:(XXBMoveViewLayout *)moveViewLayout MoveDataItemFromIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
 
+- (CGFloat)moveView:(XXBMoveViewLayout *)moveViewLayout heightForCellAtIndexPath:(NSIndexPath *)indexPath;
+
 @end
 
 @interface XXBMoveViewLayout : UICollectionViewFlowLayout

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6259B0B11CB5FEB100D8660D /* XXBMoveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6259B0B01CB5FEB100D8660D /* XXBMoveModel.m */; };
 		62ADFB961CB4A74C00FAEA22 /* XXBMoveViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ADFB941CB4A74C00FAEA22 /* XXBMoveViewLayout.m */; };
 		62ADFB991CB4A98600FAEA22 /* XXBMoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ADFB981CB4A98600FAEA22 /* XXBMoveCell.m */; };
 		62F543871CB4A44D00DB3586 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F543861CB4A44D00DB3586 /* main.m */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6259B0AF1CB5FEB100D8660D /* XXBMoveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveModel.h; sourceTree = "<group>"; };
+		6259B0B01CB5FEB100D8660D /* XXBMoveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveModel.m; sourceTree = "<group>"; };
 		62ADFB931CB4A74C00FAEA22 /* XXBMoveViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveViewLayout.h; sourceTree = "<group>"; };
 		62ADFB941CB4A74C00FAEA22 /* XXBMoveViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXBMoveViewLayout.m; sourceTree = "<group>"; };
 		62ADFB971CB4A98600FAEA22 /* XXBMoveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXBMoveCell.h; sourceTree = "<group>"; };
@@ -66,6 +69,8 @@
 		62ADFB911CB4A74C00FAEA22 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6259B0AF1CB5FEB100D8660D /* XXBMoveModel.h */,
+				6259B0B01CB5FEB100D8660D /* XXBMoveModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 				62ADFB961CB4A74C00FAEA22 /* XXBMoveViewLayout.m in Sources */,
 				62F5438D1CB4A44D00DB3586 /* ViewController.m in Sources */,
 				62F5438A1CB4A44D00DB3586 /* AppDelegate.m in Sources */,
+				6259B0B11CB5FEB100D8660D /* XXBMoveModel.m in Sources */,
 				62F543871CB4A44D00DB3586 /* main.m in Sources */,
 				62ADFB991CB4A98600FAEA22 /* XXBMoveCell.m in Sources */,
 			);

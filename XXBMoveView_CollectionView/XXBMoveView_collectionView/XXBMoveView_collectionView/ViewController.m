@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "XXBMoveViewLayout.h"
 #import "XXBMoveCell.h"
+#import "XXBMoveModel.h"
 
 @interface ViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,XXBMoveViewLayoutDelegate>
 @property(nonatomic , strong) NSMutableArray   *dataSouceArray;
@@ -74,8 +75,16 @@ static NSString *moveCellID = @"moveCellID";
         NSMutableArray *array = [NSMutableArray array];
         [_dataSouceArray addObject:array];
         for (int j = 0; j < 5; j++) {
-            [array addObject:[NSString stringWithFormat:@"%d --->>> %d",i,j]];
+            XXBMoveModel *moveModel = [[XXBMoveModel alloc] init];
+            moveModel.title = [NSString stringWithFormat:@"%d --->>> %d",i,j];
+            moveModel.height = arc4random_uniform(100) + 80;
+            [array addObject:moveModel];
         }
     }
+}
+
+- (CGFloat)moveView:(XXBMoveViewLayout *)moveViewLayout heightForCellAtIndexPath:(NSIndexPath *)indexPath {
+    XXBMoveModel *moveModel = self.dataSouceArray[indexPath.section][indexPath.row];
+    return moveModel.height;
 }
 @end

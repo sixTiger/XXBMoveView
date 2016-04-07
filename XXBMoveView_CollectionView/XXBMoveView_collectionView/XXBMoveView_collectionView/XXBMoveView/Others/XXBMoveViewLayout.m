@@ -26,6 +26,14 @@
     
     CGFloat                         offSetY;
     BOOL                            shouldMove;
+    NSMutableArray                  *attributesArray;
+    CGFloat                         maxHeight;
+    
+    //temp var
+    CGFloat                         itemX;
+    CGFloat                         itemY;
+    CGFloat                         itemW;
+    CGFloat                         itemH;
 }
 @property(nonatomic , strong) UIView   *canvas;
 
@@ -51,6 +59,8 @@
 }
 
 - (void)_setup {
+    maxHeight = 0;
+    attributesArray = [NSMutableArray array];
     [self addObserver:self forKeyPath:@"collectionView" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
@@ -61,15 +71,44 @@
     
 }
 
-#pragma mark -
+#pragma mark - collectionViewLayout
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
     return YES;
 }
 
+- (void)prepareLayout {
+    [super prepareLayout];
+    [attributesArray removeAllObjects];
+    maxHeight = 0;
+    
+    NSInteger sectionCount = [self.collectionView numberOfSections];
+    for (int section = 0; section < sectionCount ; section++) {
+        NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
+        for (int row = 0; row < itemCount; row++) {
+            [attributesArray addObject:[self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]]];
+        }
+    }
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+    itemX = self.minimumInteritemSpacing;
+    itemW = self.itemSize.width;
+    itemH = [self.delegate moveView:self heightForCellAtIndexPath:indexPath];
+    itemY = maxHeight + self.minimumLineSpacing;
+    maxHeight = itemH + itemY;
+    attributes.frame = CGRectMake(itemX, itemY, itemW, itemH);
+    itemX = 0;
+    itemY = 0;
+    itemH = 0;
+    itemW = 0;
+    return attributes;
+   
+}
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
-    NSArray *array = [super layoutAttributesForElementsInRect:rect];
+    NSArray *array = attributesArray;
     if (currentIndexPath == nil) {
         return array;
     }
@@ -110,7 +149,10 @@
     }
 }
 
-#pragma mark -
+- (CGSize)collectionViewContentSize {
+    return CGSizeMake(self.collectionView.bounds.size.width, maxHeight + self.minimumLineSpacing);
+}
+#pragma mark - handlerGestureRecognizer
 
 - (void)_addLongPressGestureRecognizer {
     self.canvas = nil;
@@ -128,7 +170,7 @@
     NSLog(@"XXX -- %@",NSStringFromCGPoint(dragPointOnCanvas));
     switch (longPressGesture.state) {
         case UIGestureRecognizerStateBegan: {
-//            souceCell.hidden = YES;
+            //            souceCell.hidden = YES;
             [self.canvas addSubview:repressentationImageView];
             break;
         }

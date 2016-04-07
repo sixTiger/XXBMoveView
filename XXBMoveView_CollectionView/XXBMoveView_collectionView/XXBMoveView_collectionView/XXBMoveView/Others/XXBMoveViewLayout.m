@@ -139,7 +139,7 @@
             CGPoint origin = layoutAttributes.frame.origin;
             CGSize size = layoutAttributes.frame.size;
             offSetY = size.height - movingCellHeight;
-            layoutAttributes.frame = CGRectMake(origin.x + 10, origin.y, size.width -= 20, movingCellHeight);
+            layoutAttributes.frame = CGRectMake(origin.x, origin.y, size.width, movingCellHeight);
         }
         //后边的一次更改y的值
         if([self isFirstIndexPath:currentIndexPath smallThanSecondIndexPath:layoutAttributes.indexPath] ){
@@ -228,33 +228,17 @@
             }
             break;
         }
-            
-        case UIGestureRecognizerStateEnded: {
-            
-            [(XXBMoveCell *)souceCell setDranging:NO];
-            souceCell.hidden = NO;
-            [repressentationImageView removeFromSuperview];
-            NSIndexPath *shouReloadIndexPath = [NSIndexPath indexPathForRow:currentIndexPath.row inSection:currentIndexPath.section];
-            
-            souceCell = nil;
-            currentIndexPath = nil;
-            repressentationImageView = nil;
-            offSetY = 0;
-            [self.collectionView reloadItemsAtIndexPaths:@[shouReloadIndexPath]];
-            break;
-        }
-            
         default: {
             [(XXBMoveCell *)souceCell setDranging:NO];
             souceCell.hidden = NO;
             [repressentationImageView removeFromSuperview];
-            NSIndexPath *shouReloadIndexPath = [NSIndexPath indexPathForRow:currentIndexPath.row inSection:currentIndexPath.section];
-            
             souceCell = nil;
             currentIndexPath = nil;
             repressentationImageView = nil;
             offSetY = 0;
-            [self.collectionView reloadItemsAtIndexPaths:@[shouReloadIndexPath]];
+            [UIView animateWithDuration:0.25 animations:^{
+                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 0.5)];
+            }];
             break;
         }
     }
@@ -283,6 +267,9 @@
             currentIndexPath = [collectionView indexPathForCell:cell];
             [collectionView reloadItemsAtIndexPaths:@[currentIndexPath]];
             souceCell = [collectionView cellForItemAtIndexPath:currentIndexPath];
+//            [UIView animateWithDuration:0.25 animations:^{
+//                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 0.5)];
+//            }];
             break;
         }
         
@@ -316,7 +303,8 @@
     CGRect handleRect = view.frame;
     if (pointInView.y - handleRect.origin.y < shouldMoveMargin ) {
         //应该向上移动
-        CGFloat actionY =  pointInView.y - handleRect.origin.y + shouldMoveMargin;
+        CGFloat actionY = handleRect.origin.y + shouldMoveMargin - pointInView.y;
+        actionY += 40;
         CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y - actionY);
         if (newContentOffset.y <= 0) {
             newContentOffset.y = 0;
@@ -327,6 +315,7 @@
         if ( handleRect.size.height - ( pointInView.y - handleRect.origin.y )  < shouldMoveMargin ) {
             //应该向下移动了
             CGFloat actionY = ( pointInView.y - handleRect.origin.y ) - (handleRect.size.height - shouldMoveMargin);
+            actionY += 40;
             CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + actionY);
             if (newContentOffset.y > self.collectionView.contentSize.height - self.collectionView.frame.size.height) {
                 newContentOffset.y = self.collectionView.contentSize.height - self.collectionView.frame.size.height;

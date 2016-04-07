@@ -104,7 +104,7 @@
     itemH = 0;
     itemW = 0;
     return attributes;
-   
+    
 }
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -150,7 +150,7 @@
 }
 
 - (CGSize)collectionViewContentSize {
-    return CGSizeMake(self.collectionView.bounds.size.width, maxHeight + self.minimumLineSpacing);
+    return CGSizeMake(self.collectionView.bounds.size.width, maxHeight + self.minimumLineSpacing - offSetY);
 }
 #pragma mark - handlerGestureRecognizer
 
@@ -207,6 +207,7 @@
             souceCell = nil;
             currentIndexPath = nil;
             repressentationImageView = nil;
+            offSetY = 0;
             [self.collectionView reloadItemsAtIndexPaths:@[shouReloadIndexPath]];
             
             break;
@@ -221,6 +222,7 @@
             souceCell = nil;
             currentIndexPath = nil;
             repressentationImageView = nil;
+            offSetY = 0;
             [self.collectionView reloadItemsAtIndexPaths:@[shouReloadIndexPath]];
         }
             break;

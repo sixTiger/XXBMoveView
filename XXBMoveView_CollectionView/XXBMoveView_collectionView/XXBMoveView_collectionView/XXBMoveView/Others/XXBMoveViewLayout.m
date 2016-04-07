@@ -27,7 +27,7 @@
     CGFloat                         offSetY;
     BOOL                            shouldMove;
     NSMutableArray                  *attributesArray;
-    CGFloat                         maxHeight;
+    NSMutableArray                  *heightArray;
     
     //temp var
     CGFloat                         itemX;
@@ -59,7 +59,7 @@
 }
 
 - (void)_setup {
-    maxHeight = 0;
+    heightArray = [NSMutableArray array];
     attributesArray = [NSMutableArray array];
     [self addObserver:self forKeyPath:@"collectionView" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
 }
@@ -80,7 +80,14 @@
 - (void)prepareLayout {
     [super prepareLayout];
     [attributesArray removeAllObjects];
-    maxHeight = 0;
+    [heightArray removeAllObjects];
+    int interCount = (int)(self.collectionView.frame.size.width)/(self.itemSize.width + self.minimumInteritemSpacing * 2);
+    if (interCount < 1 ) {
+        interCount = 1;
+    }
+    for (int i = 0; i < interCount; i++) {
+        [heightArray addObject:@"0"];
+    }
     
     NSInteger sectionCount = [self.collectionView numberOfSections];
     for (int section = 0; section < sectionCount ; section++) {
@@ -93,16 +100,29 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    itemX = self.minimumInteritemSpacing;
-    itemW = self.itemSize.width;
-    itemH = [self.delegate moveView:self heightForCellAtIndexPath:indexPath];
-    itemY = maxHeight + self.minimumLineSpacing;
-    maxHeight = itemH + itemY;
-    attributes.frame = CGRectMake(itemX, itemY, itemW, itemH);
-    itemX = 0;
-    itemY = 0;
-    itemH = 0;
-    itemW = 0;
+    if (heightArray.count > 0) {
+        CGFloat minHeight = [(NSNumber *)[heightArray firstObject] floatValue];
+        int flg = 0;
+        for (int i = 1; i < heightArray.count; i++) {
+            if ([heightArray[i] floatValue] < minHeight) {
+                minHeight = [heightArray[i] floatValue];
+                flg = i;
+            }
+        }
+        CGFloat maxWidth = self.collectionView.frame.size.width/heightArray.count;
+        itemX = maxWidth * flg + (maxWidth - self.itemSize.width) * 0.5;
+        itemW = self.itemSize.width;
+        itemH = [self.delegate moveView:self heightForCellAtIndexPath:indexPath];
+        itemY = minHeight + self.minimumLineSpacing;
+        
+        
+        heightArray[flg] = @(itemH + itemY);
+        attributes.frame = CGRectMake(itemX, itemY, itemW, itemH);
+        itemX = 0;
+        itemY = 0;
+        itemH = 0;
+        itemW = 0;
+    }
     return attributes;
     
 }
@@ -150,7 +170,13 @@
 }
 
 - (CGSize)collectionViewContentSize {
-    return CGSizeMake(self.collectionView.bounds.size.width, maxHeight + self.minimumLineSpacing - offSetY);
+    CGFloat maxHeight = 0;
+    for (NSNumber *height in heightArray) {
+        if (height.floatValue > maxHeight) {
+            maxHeight = height.floatValue;
+        }
+    }
+    return CGSizeMake(self.collectionView.frame.size.width, maxHeight + self.minimumLineSpacing - offSetY);
 }
 #pragma mark - handlerGestureRecognizer
 
@@ -247,7 +273,7 @@
             UIGraphicsEndPDFContext();
             
             repressentationImageView = [[UIImageView alloc] initWithImage:image];
-            cellInCavasFrame.origin.x = 10;
+            cellInCavasFrame.origin.x  += 10;
             cellInCavasFrame.size.width -= 20;
             cellInCavasFrame.size.height = movingCellHeight;
             repressentationImageView.frame = cellInCavasFrame;
@@ -299,8 +325,8 @@
             //应该向下移动了
             CGFloat actionY = ( pointInView.y - handleRect.origin.y ) - (handleRect.size.height - shouldMoveMargin);
             CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + actionY);
-            if (newContentOffset.y > self.collectionView.contentSize.height - self.collectionView.bounds.size.height) {
-                newContentOffset.y = self.collectionView.contentSize.height - self.collectionView.bounds.size.height;
+            if (newContentOffset.y > self.collectionView.contentSize.height - self.collectionView.frame.size.height) {
+                newContentOffset.y = self.collectionView.contentSize.height - self.collectionView.frame.size.height;
             }
             [self.collectionView setContentOffset:newContentOffset animated:YES];
         }

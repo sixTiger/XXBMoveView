@@ -34,7 +34,7 @@ static NSString *moveCellID = @"moveCellID";
 - (void)_setupCollectionView {
     XXBMoveViewLayout *moveLayout = [[XXBMoveViewLayout alloc] init];
     moveLayout.delegate = self;
-    CGSize cellSize = CGSizeMake(280, 100);
+    CGSize cellSize = CGSizeMake(80, 100);
     moveLayout.itemSize = cellSize;
     moveLayout.minimumLineSpacing = 4;
     moveLayout.minimumInteritemSpacing = 4;
@@ -71,10 +71,10 @@ static NSString *moveCellID = @"moveCellID";
 }
 - (void)_setupDataSouceArray {
     _dataSouceArray = [NSMutableArray array];
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 6; i++) {
         NSMutableArray *array = [NSMutableArray array];
         [_dataSouceArray addObject:array];
-        for (int j = 0; j < 5; j++) {
+        for (int j = 0; j < 10; j++) {
             XXBMoveModel *moveModel = [[XXBMoveModel alloc] init];
             moveModel.title = [NSString stringWithFormat:@"%d --->>> %d",i,j];
             moveModel.height = arc4random_uniform(100) + 80;

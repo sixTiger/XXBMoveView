@@ -66,6 +66,7 @@
     attributesArray = [NSMutableArray array];
     [self addObserver:self forKeyPath:@"collectionView" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
 }
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     UICollectionView *collectionView = (UICollectionView *)change[@"new"];
     if (collectionView != nil) {
@@ -128,7 +129,6 @@
         itemW = 0;
     }
     return attributes;
-    
 }
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -193,10 +193,8 @@
     longPressGestureRecognizer.delaysTouchesBegan = YES;
     [self.collectionView addGestureRecognizer:longPressGestureRecognizer];
 }
+
 - (void)_handleLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGesture{
-    NSLog(@"++++++++");
-    
-    NSLog(@"%@>>>>>>%@", longPressGesture,longPressGestureRecognizer);
     
     CGPoint dragPointOnCanvas = [longPressGesture locationInView:self.canvas];
     [self autoHandlerMove:dragPointOnCanvas andView:self.canvas];
@@ -236,6 +234,7 @@
             }
             break;
         }
+            
         case UIGestureRecognizerStateEnded: {
             [self.timer invalidate];
             _timer = nil;
@@ -251,6 +250,7 @@
             }];
             break;
         }
+            
         default: {
             [(XXBMoveCell *)souceCell setDranging:NO];
             souceCell.hidden = NO;
@@ -290,9 +290,6 @@
             currentIndexPath = [collectionView indexPathForCell:cell];
             [collectionView reloadItemsAtIndexPaths:@[currentIndexPath]];
             souceCell = [collectionView cellForItemAtIndexPath:currentIndexPath];
-            //            [UIView animateWithDuration:0.25 animations:^{
-            //                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 0.5)];
-            //            }];
             break;
         }
         

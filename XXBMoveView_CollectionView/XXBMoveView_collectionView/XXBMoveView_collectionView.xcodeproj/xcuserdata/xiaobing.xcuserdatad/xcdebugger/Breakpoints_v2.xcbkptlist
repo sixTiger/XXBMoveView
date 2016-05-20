@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XXBMoveView_collectionView/XXBMoveView/Others/XXBMoveViewLayout.m"
-            timestampString = "485408536.461843"
+            timestampString = "485416117.35581"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "255"
@@ -32,16 +32,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XXBMoveView_collectionView/XXBMoveView/Others/XXBMoveViewLayout.m"
-            timestampString = "485408536.461843"
+            timestampString = "485416308.956697"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "-_handleLongPressGestureRecognizer:"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "-gestureRecognizerShouldBegin:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

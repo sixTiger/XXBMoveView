@@ -117,10 +117,12 @@
         CGFloat maxWidth = self.collectionView.frame.size.width/heightArray.count;
         itemX = maxWidth * flg + (maxWidth - self.itemSize.width) * 0.5;
         itemW = self.itemSize.width;
-        itemH = [self.delegate moveView:self heightForCellAtIndexPath:indexPath];
+        if ([indexPath isEqual:currentIndexPath]) {
+           itemH = movingCellHeight;
+        } else {
+            itemH = [self.delegate moveView:self heightForCellAtIndexPath:indexPath];
+        }
         itemY = minHeight + self.minimumLineSpacing;
-        
-        
         heightArray[flg] = @(itemH + itemY);
         attributes.frame = CGRectMake(itemX, itemY, itemW, itemH);
         itemX = 0;
@@ -132,27 +134,28 @@
 }
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
-    NSArray *array = attributesArray;
-    if (currentIndexPath == nil) {
-        return array;
-    }
-    for (UICollectionViewLayoutAttributes *layoutAttributes in array) {
-        //缩小高度
-        if([layoutAttributes.indexPath isEqual:currentIndexPath]){
-            CGPoint origin = layoutAttributes.frame.origin;
-            CGSize size = layoutAttributes.frame.size;
-            offSetY = size.height - movingCellHeight;
-            layoutAttributes.frame = CGRectMake(origin.x, origin.y, size.width, movingCellHeight);
-        }
-        //后边的要依次更改y的值
-        if([self isFirstIndexPath:currentIndexPath smallThanSecondIndexPath:layoutAttributes.indexPath] ){
-            CGPoint origin = layoutAttributes.frame.origin;
-            CGSize size = layoutAttributes.frame.size;
-            layoutAttributes.frame = CGRectMake(origin.x, origin.y - offSetY, size.width, size.height);
-        }
-        
-    }
-    return array;
+    return attributesArray;
+//    NSArray *array = attributesArray;
+//    if (currentIndexPath == nil) {
+//        return array;
+//    }
+//    for (UICollectionViewLayoutAttributes *layoutAttributes in array) {
+//        //缩小高度
+//        if([layoutAttributes.indexPath isEqual:currentIndexPath]){
+//            CGPoint origin = layoutAttributes.frame.origin;
+//            CGSize size = layoutAttributes.frame.size;
+//            offSetY = size.height - movingCellHeight;
+//            layoutAttributes.frame = CGRectMake(origin.x, origin.y, size.width, movingCellHeight);
+//        }
+//        //后边的要依次更改y的值
+//        if([self isFirstIndexPath:currentIndexPath smallThanSecondIndexPath:layoutAttributes.indexPath] ){
+//            CGPoint origin = layoutAttributes.frame.origin;
+//            CGSize size = layoutAttributes.frame.size;
+//            layoutAttributes.frame = CGRectMake(origin.x, origin.y - offSetY, size.width, size.height);
+//        }
+//        
+//    }
+//    return array;
 }
 
 - (BOOL)isFirstIndexPath:(NSIndexPath *)firIndexPath smallThanSecondIndexPath:(NSIndexPath *)secondIndexPath {
@@ -344,7 +347,7 @@
         }
     }
     if (shouldChangeContentOffset) {
-        [UIView animateWithDuration:animationTime animations:^{
+        [UIView animateWithDuration:0.5 animations:^{
             [self.collectionView setContentOffset:newContentOffset animated:NO];
         }];
     }

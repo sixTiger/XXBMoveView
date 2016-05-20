@@ -118,7 +118,7 @@
         itemX = maxWidth * flg + (maxWidth - self.itemSize.width) * 0.5;
         itemW = self.itemSize.width;
         if ([indexPath isEqual:currentIndexPath]) {
-           itemH = movingCellHeight;
+            itemH = movingCellHeight;
         } else {
             itemH = [self.delegate moveView:self heightForCellAtIndexPath:indexPath];
         }
@@ -135,27 +135,27 @@
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     return attributesArray;
-//    NSArray *array = attributesArray;
-//    if (currentIndexPath == nil) {
-//        return array;
-//    }
-//    for (UICollectionViewLayoutAttributes *layoutAttributes in array) {
-//        //缩小高度
-//        if([layoutAttributes.indexPath isEqual:currentIndexPath]){
-//            CGPoint origin = layoutAttributes.frame.origin;
-//            CGSize size = layoutAttributes.frame.size;
-//            offSetY = size.height - movingCellHeight;
-//            layoutAttributes.frame = CGRectMake(origin.x, origin.y, size.width, movingCellHeight);
-//        }
-//        //后边的要依次更改y的值
-//        if([self isFirstIndexPath:currentIndexPath smallThanSecondIndexPath:layoutAttributes.indexPath] ){
-//            CGPoint origin = layoutAttributes.frame.origin;
-//            CGSize size = layoutAttributes.frame.size;
-//            layoutAttributes.frame = CGRectMake(origin.x, origin.y - offSetY, size.width, size.height);
-//        }
-//        
-//    }
-//    return array;
+    //    NSArray *array = attributesArray;
+    //    if (currentIndexPath == nil) {
+    //        return array;
+    //    }
+    //    for (UICollectionViewLayoutAttributes *layoutAttributes in array) {
+    //        //缩小高度
+    //        if([layoutAttributes.indexPath isEqual:currentIndexPath]){
+    //            CGPoint origin = layoutAttributes.frame.origin;
+    //            CGSize size = layoutAttributes.frame.size;
+    //            offSetY = size.height - movingCellHeight;
+    //            layoutAttributes.frame = CGRectMake(origin.x, origin.y, size.width, movingCellHeight);
+    //        }
+    //        //后边的要依次更改y的值
+    //        if([self isFirstIndexPath:currentIndexPath smallThanSecondIndexPath:layoutAttributes.indexPath] ){
+    //            CGPoint origin = layoutAttributes.frame.origin;
+    //            CGSize size = layoutAttributes.frame.size;
+    //            layoutAttributes.frame = CGRectMake(origin.x, origin.y - offSetY, size.width, size.height);
+    //        }
+    //
+    //    }
+    //    return array;
 }
 
 - (BOOL)isFirstIndexPath:(NSIndexPath *)firIndexPath smallThanSecondIndexPath:(NSIndexPath *)secondIndexPath {
@@ -215,9 +215,12 @@
         case UIGestureRecognizerStateChanged: {
             CGRect imagViewFrame = repressentationImageView.frame;
             CGPoint point = CGPointZero;
-            point.x = repressentationImageView.frame.origin.x;
-            //FIXME: 如果X轴也跟着跑，调用下边的代码就可以了
-            //            point.x = dragPointOnCanvas.x - offSet.x;
+            if(heightArray.count == 0) {
+                point.x = repressentationImageView.frame.origin.x;
+            } else {
+                //FIXME: 只有一列的话没有必要让
+                point.x = dragPointOnCanvas.x - offSet.x;
+            }
             point.y = dragPointOnCanvas.y - offSet.y;
             imagViewFrame.origin = point;
             repressentationImageView.frame = imagViewFrame;

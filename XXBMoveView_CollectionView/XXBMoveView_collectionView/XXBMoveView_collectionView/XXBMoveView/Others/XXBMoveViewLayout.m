@@ -13,6 +13,8 @@
 
 #define shouldMoveMargin 100
 
+#define animationTime 0.01
+
 @interface XXBMoveViewLayout()<UIGestureRecognizerDelegate>
 {
     UILongPressGestureRecognizer    *longPressGestureRecognizer;
@@ -35,7 +37,8 @@
     CGFloat                         itemW;
     CGFloat                         itemH;
 }
-@property(nonatomic , strong) UIView   *canvas;
+@property(nonatomic , strong) UIView    *canvas;
+@property(nonatomic , strong) NSTimer   *timer;
 
 @end
 
@@ -187,15 +190,20 @@
     longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(_handleLongPressGestureRecognizer:)];
     longPressGestureRecognizer.minimumPressDuration = 0.2;
     longPressGestureRecognizer.delegate = self;
+    longPressGestureRecognizer.delaysTouchesBegan = YES;
     [self.collectionView addGestureRecognizer:longPressGestureRecognizer];
 }
 - (void)_handleLongPressGestureRecognizer:(UILongPressGestureRecognizer *)longPressGesture{
+    NSLog(@"++++++++");
+    
+    NSLog(@"%@>>>>>>%@", longPressGesture,longPressGestureRecognizer);
     
     CGPoint dragPointOnCanvas = [longPressGesture locationInView:self.canvas];
     [self autoHandlerMove:dragPointOnCanvas andView:self.canvas];
     switch (longPressGesture.state) {
             
         case UIGestureRecognizerStateBegan: {
+            [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
             souceCell.hidden = YES;
             offSet.y -= (dragPointOnCanvas.y - repressentationImageView.center.y);
             repressentationImageView.center = CGPointMake(repressentationImageView.center.x, dragPointOnCanvas.y);
@@ -226,6 +234,21 @@
                 currentIndexPath = indexpath;
                 [self.collectionView moveItemAtIndexPath:fromeIndex toIndexPath:currentIndexPath];
             }
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            [self.timer invalidate];
+            _timer = nil;
+            [(XXBMoveCell *)souceCell setDranging:NO];
+            souceCell.hidden = NO;
+            [repressentationImageView removeFromSuperview];
+            souceCell = nil;
+            currentIndexPath = nil;
+            repressentationImageView = nil;
+            offSetY = 0;
+            [UIView animateWithDuration:0.25 animations:^{
+                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 0.5)];
+            }];
             break;
         }
         default: {
@@ -267,9 +290,9 @@
             currentIndexPath = [collectionView indexPathForCell:cell];
             [collectionView reloadItemsAtIndexPaths:@[currentIndexPath]];
             souceCell = [collectionView cellForItemAtIndexPath:currentIndexPath];
-//            [UIView animateWithDuration:0.25 animations:^{
-//                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 0.5)];
-//            }];
+            //            [UIView animateWithDuration:0.25 animations:^{
+            //                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 0.5)];
+            //            }];
             break;
         }
         
@@ -297,31 +320,38 @@
         return;
     }
     shouldMove = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(animationTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         shouldMove = NO;
     });
     CGRect handleRect = view.frame;
+    BOOL shouldChangeContentOffset = NO;
+    CGPoint newContentOffset = CGPointZero;
     if (pointInView.y - handleRect.origin.y < shouldMoveMargin ) {
+        shouldChangeContentOffset = YES;
         //应该向上移动
         CGFloat actionY = handleRect.origin.y + shouldMoveMargin - pointInView.y;
         actionY += 40;
-        CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y - actionY);
+        actionY *= 0.1;
+        newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y - actionY);
         if (newContentOffset.y <= 0) {
             newContentOffset.y = 0;
         }
-        [self.collectionView setContentOffset:newContentOffset animated:YES];
         
-    } else {
-        if ( handleRect.size.height - ( pointInView.y - handleRect.origin.y )  < shouldMoveMargin ) {
-            //应该向下移动了
-            CGFloat actionY = ( pointInView.y - handleRect.origin.y ) - (handleRect.size.height - shouldMoveMargin);
-            actionY += 40;
-            CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + actionY);
-            if (newContentOffset.y > self.collectionView.contentSize.height - self.collectionView.frame.size.height) {
-                newContentOffset.y = self.collectionView.contentSize.height - self.collectionView.frame.size.height;
-            }
-            [self.collectionView setContentOffset:newContentOffset animated:YES];
+    } else  if ( handleRect.size.height - ( pointInView.y - handleRect.origin.y )  < shouldMoveMargin ) {
+        shouldChangeContentOffset = YES;
+        //应该向下移动了
+        CGFloat actionY = ( pointInView.y - handleRect.origin.y ) - (handleRect.size.height - shouldMoveMargin);
+        actionY += 40;
+        actionY *= 0.1;
+        newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + actionY);
+        if (newContentOffset.y > self.collectionView.contentSize.height - self.collectionView.frame.size.height) {
+            newContentOffset.y = self.collectionView.contentSize.height - self.collectionView.frame.size.height;
         }
+    }
+    if (shouldChangeContentOffset) {
+        [UIView animateWithDuration:animationTime animations:^{
+            [self.collectionView setContentOffset:newContentOffset animated:NO];
+        }];
     }
 }
 
@@ -339,4 +369,15 @@
     return _canvas;
 }
 
+- (NSTimer *)timer {
+    if(_timer == nil) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:animationTime target:self selector:@selector(myTouch) userInfo:nil repeats:YES];
+    }
+    return _timer;
+}
+
+- (void)myTouch {
+    [self _handleLongPressGestureRecognizer:longPressGestureRecognizer];
+    [self.collectionView becomeFirstResponder];
+}
 @end

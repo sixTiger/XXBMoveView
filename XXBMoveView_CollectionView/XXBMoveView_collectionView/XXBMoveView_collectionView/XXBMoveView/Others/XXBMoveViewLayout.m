@@ -144,7 +144,7 @@
             offSetY = size.height - movingCellHeight;
             layoutAttributes.frame = CGRectMake(origin.x, origin.y, size.width, movingCellHeight);
         }
-        //后边的一次更改y的值
+        //后边的要依次更改y的值
         if([self isFirstIndexPath:currentIndexPath smallThanSecondIndexPath:layoutAttributes.indexPath] ){
             CGPoint origin = layoutAttributes.frame.origin;
             CGSize size = layoutAttributes.frame.size;
@@ -201,7 +201,7 @@
     switch (longPressGesture.state) {
             
         case UIGestureRecognizerStateBegan: {
-            [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+            [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
             souceCell.hidden = YES;
             offSet.y -= (dragPointOnCanvas.y - repressentationImageView.center.y);
             repressentationImageView.center = CGPointMake(repressentationImageView.center.x, dragPointOnCanvas.y);
@@ -327,7 +327,6 @@
         shouldChangeContentOffset = YES;
         //应该向上移动
         CGFloat actionY = handleRect.origin.y + shouldMoveMargin - pointInView.y;
-        actionY += 40;
         actionY *= 0.1;
         newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y - actionY);
         if (newContentOffset.y <= 0) {
@@ -338,7 +337,6 @@
         shouldChangeContentOffset = YES;
         //应该向下移动了
         CGFloat actionY = ( pointInView.y - handleRect.origin.y ) - (handleRect.size.height - shouldMoveMargin);
-        actionY += 40;
         actionY *= 0.1;
         newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + actionY);
         if (newContentOffset.y > self.collectionView.contentSize.height - self.collectionView.frame.size.height) {

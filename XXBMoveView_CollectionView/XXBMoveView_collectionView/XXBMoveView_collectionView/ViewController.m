@@ -72,7 +72,7 @@ static NSString *moveCellID = @"moveCellID";
 }
 - (void)_setupDataSouceArray {
     _dataSouceArray = [NSMutableArray array];
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 2; i++) {
         NSMutableArray *array = [NSMutableArray array];
         [_dataSouceArray addObject:array];
         for (int j = 0; j < 10; j++) {

@@ -294,7 +294,12 @@
             repressentationImageView.frame = cellInCavasFrame;
             offSet = CGPointMake(pointPressInCanvas.x - cellInCavasFrame.origin.x, pointPressInCanvas.y - cellInCavasFrame.origin.y);
             currentIndexPath = [collectionView indexPathForCell:cell];
-            [collectionView reloadItemsAtIndexPaths:@[currentIndexPath]];
+            //            [collectionView reloadItemsAtIndexPaths:@[currentIndexPath]];
+            [collectionView setNeedsLayout];
+            [UIView animateWithDuration:0.25 animations:^{
+                
+                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 0.5 )];
+            }];
             souceCell = [collectionView cellForItemAtIndexPath:currentIndexPath];
             break;
         }

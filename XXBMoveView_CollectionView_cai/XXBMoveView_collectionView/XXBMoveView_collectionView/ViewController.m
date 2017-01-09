@@ -45,6 +45,7 @@ static NSString *moveCellID = @"moveCellID";
     collectionView.delegate = self;
     collectionView.dataSource = self;
     collectionView.backgroundColor = [UIColor whiteColor];
+    self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
     [collectionView registerClass:[XXBMoveCell class] forCellWithReuseIdentifier:moveCellID];
     
 }

@@ -129,27 +129,6 @@
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
     return attributesArray;
-    //    NSArray *array = attributesArray;
-    //    if (currentIndexPath == nil) {
-    //        return array;
-    //    }
-    //    for (UICollectionViewLayoutAttributes *layoutAttributes in array) {
-    //        //缩小高度
-    //        if([layoutAttributes.indexPath isEqual:currentIndexPath]){
-    //            CGPoint origin = layoutAttributes.frame.origin;
-    //            CGSize size = layoutAttributes.frame.size;
-    //            offSetY = size.height - movingCellHeight;
-    //            layoutAttributes.frame = CGRectMake(origin.x, origin.y, size.width, movingCellHeight);
-    //        }
-    //        //后边的要依次更改y的值
-    //        if([self isFirstIndexPath:currentIndexPath smallThanSecondIndexPath:layoutAttributes.indexPath] ){
-    //            CGPoint origin = layoutAttributes.frame.origin;
-    //            CGSize size = layoutAttributes.frame.size;
-    //            layoutAttributes.frame = CGRectMake(origin.x, origin.y - offSetY, size.width, size.height);
-    //        }
-    //
-    //    }
-    //    return array;
 }
 
 - (BOOL)isFirstIndexPath:(NSIndexPath *)firIndexPath smallThanSecondIndexPath:(NSIndexPath *)secondIndexPath {
@@ -340,7 +319,7 @@
         }
     }
     if (shouldChangeContentOffset) {
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             [self.collectionView setContentOffset:newContentOffset animated:NO];
         }];
     }
